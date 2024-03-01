@@ -17,11 +17,18 @@ struct Timer
         mStartTime = clock_t::now();
     }
 
-    void Stop(const std::string& msg)
+    void Stop()
     {
         mStopTime = clock_t::now();
-        std::chrono::duration<double, std::milli> elapsedTime = mStopTime - mStartTime;
-        std::cout << "[" << msg << elapsedTime.count() << "ms]" << std::endl;
     }
-    
+
+    double Elapsed() const
+    {
+        return std::chrono::duration<double, std::milli>(mStopTime - mStartTime).count();
+    }
+
+    void PrintElapsed(const std::string &msg)
+    {
+        std::cout << "[" << msg << ": " << Elapsed() << "ms]" << std::endl;
+    }
 };
