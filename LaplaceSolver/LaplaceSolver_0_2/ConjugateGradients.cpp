@@ -58,7 +58,7 @@ void ConjugateGradients(
     // Beginning of loop from Line 5
     for (int k = 0;; k++)
     {
-        std::cout << "Residual norm (nu) after " << k << " iterations = " << nu << std::endl;
+        // std::cout << "Residual norm (nu) after " << k << " iterations = " << nu << std::endl;
 
         timer.Start();
         ComputeLaplacian(p, z);

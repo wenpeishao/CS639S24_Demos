@@ -30,7 +30,8 @@ int main(int argc, char *argv[])
         Timer timer;
         timer.Start();
         InitializeProblem(x, f);
-        timer.Stop("Initialization : ");
+        timer.Stop();
+        std::cout << "Initialization : " << timer.Elapsed() << " ms" << std::endl;
     }
 
     // Call Conjugate Gradients algorithm

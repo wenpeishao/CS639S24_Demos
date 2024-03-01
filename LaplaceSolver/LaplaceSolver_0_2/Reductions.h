@@ -1,9 +1,15 @@
 #pragma once
 
-#include "Parameters.h"
+#include "Parameters.h" // Include or declare XDIM, YDIM, ZDIM
 
-// Compute the maximum absolute value among the array elements
 float Norm(const float (&x)[XDIM][YDIM][ZDIM]);
 
-// Compute the "dot product" between the two arrays
 float InnerProduct(const float (&x)[XDIM][YDIM][ZDIM], const float (&y)[XDIM][YDIM][ZDIM]);
+
+struct NormInnerProductResult
+{
+    float norm;
+    float innerProduct;
+};
+
+NormInnerProductResult NormInnerProduct(const float (&x)[XDIM][YDIM][ZDIM], const float (&y)[XDIM][YDIM][ZDIM]);
