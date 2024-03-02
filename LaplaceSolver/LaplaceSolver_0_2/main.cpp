@@ -8,7 +8,8 @@ extern double totalTimeSaxpy;
 extern double totalTimeCopy;
 extern double totalTimeNorm;
 extern double totalTimeInnerProduct;
-
+extern double totalTimeTwoSaxpy;
+extern double CombinedCopyAndInnerProduct;
 int main(int argc, char *argv[])
 {
     using array_t = float(&)[XDIM][YDIM][ZDIM];
@@ -35,7 +36,11 @@ int main(int argc, char *argv[])
     }
 
     // Call Conjugate Gradients algorithm
+    Timer timer;
+    timer.Start();
     ConjugateGradients(x, f, p, r, z);
+    timer.Stop();
+    std::cout << "Running time : " << timer.Elapsed() << " ms" << std::endl;
 
     // Report the cumulative times
     std::cout << "Total time spent in ComputeLaplacian: " << totalTimeComputeLaplacian << " ms\n";
@@ -43,6 +48,8 @@ int main(int argc, char *argv[])
     std::cout << "Total time spent in Copy: " << totalTimeCopy << " ms\n";
     std::cout << "Total time spent in Norm: " << totalTimeNorm << " ms\n";
     std::cout << "Total time spent in InnerProduct: " << totalTimeInnerProduct << " ms\n";
+    std::cout << "Total time spent in totalTimeTwoSaxpy: " << totalTimeTwoSaxpy << " ms\n";
+    std::cout << "Total time spent in CombinedCopyAndInnerProduct: " << CombinedCopyAndInnerProduct << " ms\n";
 
     // Cleanup
     delete[] xRaw;

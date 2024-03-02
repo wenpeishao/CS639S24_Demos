@@ -6,10 +6,8 @@ float Norm(const float (&x)[XDIM][YDIM][ZDIM]);
 
 float InnerProduct(const float (&x)[XDIM][YDIM][ZDIM], const float (&y)[XDIM][YDIM][ZDIM]);
 
-struct NormInnerProductResult
-{
-    float norm;
-    float innerProduct;
-};
+float CombinedCopyAndInnerProduct(const float (&x)[XDIM][YDIM][ZDIM], float (&y)[XDIM][YDIM][ZDIM]);
 
-NormInnerProductResult NormInnerProduct(const float (&x)[XDIM][YDIM][ZDIM], const float (&y)[XDIM][YDIM][ZDIM]);
+void Two_Saxpy(float (&p)[XDIM][YDIM][ZDIM], const float (&z)[XDIM][YDIM][ZDIM],
+               float (&x)[XDIM][YDIM][ZDIM],
+               const float alpha, const float beta)

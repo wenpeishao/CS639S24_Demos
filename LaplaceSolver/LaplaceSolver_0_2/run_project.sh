@@ -1,16 +1,18 @@
 #!/bin/bash
 
 # Compile the project
+make clean
 make
 
-# Check if compilation was successful
 if [ $? -ne 0 ]; then
     echo "Compilation failed."
     exit 1
 fi
 
-# Run the program
-./cg_solver
+echo "Running single-threaded version..."
+./conjugate_gradients_single
+echo "Single-threaded version finished."
 
-# Optionally, you can add commands to clean up after running
-# make clean
+echo "Running multi-threaded version..."
+./conjugate_gradients_multi
+echo "Multi-threaded version finished."

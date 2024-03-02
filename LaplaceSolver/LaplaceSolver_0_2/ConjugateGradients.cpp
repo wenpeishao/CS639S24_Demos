@@ -13,6 +13,8 @@ double totalTimeSaxpy = 0.0;
 double totalTimeCopy = 0.0;
 double totalTimeNorm = 0.0;
 double totalTimeInnerProduct = 0.0;
+double totalTimeTwoSaxpy = 0.0;
+double CombinedCopyAndInnerProduct = 0.0;
 
 void ConjugateGradients(
     float (&x)[XDIM][YDIM][ZDIM],
@@ -38,22 +40,26 @@ void ConjugateGradients(
     timer.Start();
     float nu = Norm(r);
     timer.Stop();
-    totalTimeNorm += timer.Elapsed();
+    CombinedCopyAndInnerProduct += timer.Elapsed();
 
     // Algorithm : Line 3
     if (nu < nuMax)
         return;
 
     // Algorithm : Line 4
+    // timer.Start();
+    // Copy(r, p);
+    // timer.Stop();
+    // totalTimeCopy += timer.Elapsed();
+
+    // timer.Start();
+    // float rho = InnerProduct(p, r);
+    // timer.Stop();
+    // totalTimeInnerProduct += timer.Elapsed();
     timer.Start();
-    Copy(r, p);
+    float rho = CombinedCopyAndInnerProduct(r, p);
     timer.Stop();
     totalTimeCopy += timer.Elapsed();
-
-    timer.Start();
-    float rho = InnerProduct(p, r);
-    timer.Stop();
-    totalTimeInnerProduct += timer.Elapsed();
 
     // Beginning of loop from Line 5
     for (int k = 0;; k++)
@@ -108,14 +114,9 @@ void ConjugateGradients(
         rho = rho_new;
 
         timer.Start();
-        Saxpy(p, x, x, alpha);
+        Two_Saxpy(p, x, x, alpha);
         timer.Stop();
-        totalTimeSaxpy += timer.Elapsed();
-
-        timer.Start();
-        Saxpy(p, r, p, beta);
-        timer.Stop();
-        totalTimeSaxpy += timer.Elapsed();
+        totalTimeTwoSaxpy += timer.Elapsed();
 
         if (writeIterations)
             WriteAsImage("x", x, k, 0, 127);
