@@ -1,36 +1,26 @@
-# Compiler settings - Can be customized.
-CXX = g++
-CXXFLAGS = -Wall -O3 -fopenmp
-LDFLAGS = -fopenmp
-LIBS = 
+CXX=g++
+CXXFLAGS=-std=c++11 -O3
+SOURCES=main.cpp ConjugateGradients.cpp Utilities.cpp PointwiseOps.cpp Reductions.cpp Laplacian.cpp
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=conjugate_gradients
+EXECUTABLE_SINGLE=$(EXECUTABLE)_single
+EXECUTABLE_MULTI=$(EXECUTABLE)_multi
 
-# Makefile settings - the file extension for C++ source files
-EXT = cpp
+# Default target
+all: $(EXECUTABLE_SINGLE) $(EXECUTABLE_MULTI)
 
-# List of all .cpp files.
-CPP_FILES := $(wildcard *.$(EXT))
+# Single-threaded version
+$(EXECUTABLE_SINGLE): CXXFLAGS += -DNO_OMP
+$(EXECUTABLE_SINGLE): $(SOURCES)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# Object files have same name as .cpp files, but with .o extension.
-OBJ_FILES := $(CPP_FILES:.$(EXT)=.o)
+# Multi-threaded version
+$(EXECUTABLE_MULTI): CXXFLAGS += -fopenmp
+$(EXECUTABLE_MULTI): $(SOURCES)
+	$(CXX) $(CXXFLAGS) $^ -o $@
 
-# The executable program to build:
-TARGET = ConjugateGradients
-
-# Build the main program.
-$(TARGET): $(OBJ_FILES)
-	$(CXX) $(LDFLAGS) -o $@ $^ $(LIBS)
-
-# Build .o object files from .cpp source files.
-%.o: %.$(EXT)
-	$(CXX) $(CXXFLAGS) -c $<
-
-# Clean up build.
+# Clean objects and executables
 clean:
-	rm -f $(TARGET) $(OBJ_FILES)
+	rm -f $(EXECUTABLE_SINGLE) $(EXECUTABLE_MULTI)
 
-# A target to run the program.
-run: $(TARGET)
-	./$(TARGET)
-
-# A phony target to force make to run, even if it thinks it doesn't need to.
-.PHONY: clean run
+.PHONY: all clean

@@ -10,4 +10,4 @@ float CombinedCopyAndInnerProduct(const float (&x)[XDIM][YDIM][ZDIM], float (&y)
 
 void Two_Saxpy(float (&p)[XDIM][YDIM][ZDIM], const float (&z)[XDIM][YDIM][ZDIM],
                float (&x)[XDIM][YDIM][ZDIM],
-               const float alpha, const float beta)
+               const float alpha, const float beta);

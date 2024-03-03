@@ -14,7 +14,7 @@ double totalTimeCopy = 0.0;
 double totalTimeNorm = 0.0;
 double totalTimeInnerProduct = 0.0;
 double totalTimeTwoSaxpy = 0.0;
-double CombinedCopyAndInnerProduct = 0.0;
+double totalCombinedCopyAndInnerProduct = 0.0;
 
 void ConjugateGradients(
     float (&x)[XDIM][YDIM][ZDIM],
@@ -40,7 +40,7 @@ void ConjugateGradients(
     timer.Start();
     float nu = Norm(r);
     timer.Stop();
-    CombinedCopyAndInnerProduct += timer.Elapsed();
+    totalCombinedCopyAndInnerProduct += timer.Elapsed();
 
     // Algorithm : Line 3
     if (nu < nuMax)
@@ -114,7 +114,7 @@ void ConjugateGradients(
         rho = rho_new;
 
         timer.Start();
-        Two_Saxpy(p, x, x, alpha);
+        Two_Saxpy(p, z, x, alpha, beta);
         timer.Stop();
         totalTimeTwoSaxpy += timer.Elapsed();
 

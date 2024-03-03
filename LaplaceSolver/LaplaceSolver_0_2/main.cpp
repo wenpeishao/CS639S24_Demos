@@ -9,7 +9,7 @@ extern double totalTimeCopy;
 extern double totalTimeNorm;
 extern double totalTimeInnerProduct;
 extern double totalTimeTwoSaxpy;
-extern double CombinedCopyAndInnerProduct;
+extern double totalCombinedCopyAndInnerProduct;
 int main(int argc, char *argv[])
 {
     using array_t = float(&)[XDIM][YDIM][ZDIM];
@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
     std::cout << "Total time spent in Norm: " << totalTimeNorm << " ms\n";
     std::cout << "Total time spent in InnerProduct: " << totalTimeInnerProduct << " ms\n";
     std::cout << "Total time spent in totalTimeTwoSaxpy: " << totalTimeTwoSaxpy << " ms\n";
-    std::cout << "Total time spent in CombinedCopyAndInnerProduct: " << CombinedCopyAndInnerProduct << " ms\n";
+    std::cout << "Total time spent in CombinedCopyAndInnerProduct: " << totalCombinedCopyAndInnerProduct << " ms\n";
 
     // Cleanup
     delete[] xRaw;
